@@ -1,0 +1,19 @@
+{
+  "name": "EvergageBnextIntegration",
+  "version": "0.0.1",
+  "description": "EvergageBnextIntegration",
+  "cordova": {
+    "id": "cordova-plugin-evergage-bnext-integration",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "author": "Bnext",
+  "license": "ISC"
+}
