@@ -9,16 +9,26 @@
       "ios"
     ]
   },
-  "homepage": "https://dev.azure.com/bnext-mx/Bnext%20eShop/_git/Evergage%20Cordova#readme",
+  "homepage": "https://dev.azure.com/bnext-mx/Bnext%20eShop/_git/Evergage%20Cordova",
   "keywords": [
     "ecosystem:cordova",
     "cordova-android",
     "cordova-ios"
   ],
+  "engines": {
+      "cordovaDependencies": {
+          "3.0.0": {
+              "cordova": ">100"
+          }
+      }
+  },
   "author": {
     "name": "Bnext"
   },
-  "license": "Bnext",
+  "license": "MIT",
+  "bugs": {
+    "url": "mailto:jrodriguez@bnext.mx"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://dev.azure.com/bnext-mx/Bnext%20eShop/_git/Evergage%20Cordova"

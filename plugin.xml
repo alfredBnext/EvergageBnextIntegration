@@ -5,8 +5,10 @@
 		version="0.0.1">
 	<name>EvergageBnextIntegration</name>
 	<description>EvergageBnextIntegration</description>
-    <license>Bnext</license>
+    <license>MIT</license>
     <keywords>cordova,evergage</keywords>
+	<repo>https://dev.azure.com/bnext-mx/Bnext%20eShop/_git/Evergage%20Cordova</repo>
+	<issue>mailto:jrodriguez@bnext.mx</issue>
 
 	<js-module name="EvergageBnextIntegration" src="www/EvergageBnextIntegration.js">
 		<clobbers target="EvergageBnextIntegration" />
