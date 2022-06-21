@@ -9,11 +9,18 @@
       "ios"
     ]
   },
+  "homepage": "https://dev.azure.com/bnext-mx/Bnext%20eShop/_git/Evergage%20Cordova#readme",
   "keywords": [
     "ecosystem:cordova",
     "cordova-android",
     "cordova-ios"
   ],
-  "author": "Bnext",
-  "license": "ISC"
+  "author": {
+    "name": "Bnext"
+  },
+  "license": "Bnext",
+  "repository": {
+    "type": "git",
+    "url": "git+https://dev.azure.com/bnext-mx/Bnext%20eShop/_git/Evergage%20Cordova"
+  }
 }

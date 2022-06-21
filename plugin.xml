@@ -1,8 +1,13 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="cordova-plugin-evergage-bnext-integration" version="0.0.1"
-	xmlns="http://apache.org/cordova/ns/plugins/1.0"
-	xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		id="cordova-plugin-evergage-bnext-integration" 
+		version="0.0.1">
 	<name>EvergageBnextIntegration</name>
+	<description>EvergageBnextIntegration</description>
+    <license>Bnext</license>
+    <keywords>cordova,evergage</keywords>
+
 	<js-module name="EvergageBnextIntegration" src="www/EvergageBnextIntegration.js">
 		<clobbers target="EvergageBnextIntegration" />
 	</js-module>
