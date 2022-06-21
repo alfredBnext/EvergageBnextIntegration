@@ -2,17 +2,24 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		id="cordova-plugin-evergage-bnext-integration" 
-		version="0.0.1">
+		version="0.0.2">
 	<name>EvergageBnextIntegration</name>
+	
 	<description>EvergageBnextIntegration</description>
     <license>MIT</license>
+
     <keywords>cordova,evergage</keywords>
 	<repo>https://dev.azure.com/bnext-mx/Bnext%20eShop/_git/Evergage%20Cordova</repo>
 	<issue>mailto:jrodriguez@bnext.mx</issue>
 
+	<engines>
+        <engine name="cordova" version=">=3.2.0"/>
+    </engines>
+
 	<js-module name="EvergageBnextIntegration" src="www/EvergageBnextIntegration.js">
-		<clobbers target="EvergageBnextIntegration" />
+		<clobbers target="window.plugins.EvergageBnextIntegration" />
 	</js-module>
+
 	<platform name="android">
 		<config-file parent="/*" target="res/xml/config.xml">
 			<feature name="EvergageBnextIntegration">
@@ -22,6 +29,7 @@
 		<config-file parent="/*" target="AndroidManifest.xml" />
 		<source-file src="src/android/EvergageBnextIntegration.java" target-dir="src/mx/bnext/EvergageBnextIntegration" />
 	</platform>
+	
 	<platform name="ios">
 		<config-file parent="/*" target="config.xml">
 			<feature name="EvergageBnextIntegration">
