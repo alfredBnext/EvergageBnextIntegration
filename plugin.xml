@@ -9,7 +9,7 @@
     <license>MIT</license>
 
     <keywords>cordova,evergage</keywords>
-	<repo>https://dev.azure.com/bnext-mx/Bnext%20eShop/_git/Evergage%20Cordova</repo>
+	<repo>https://github.com/AlfredRds/EvergageBnextIntegration</repo>
 	<issue>mailto:jrodriguez@bnext.mx</issue>
 
 	<engines>
@@ -23,7 +23,7 @@
 	<platform name="android">
 		<config-file parent="/*" target="res/xml/config.xml">
 			<feature name="EvergageBnextIntegration">
-				<param name="android-package" value="cordova-plugin-evergage-bnext-integration.EvergageBnextIntegration" />
+				<param name="android-package" value="mx.bnext.EvergageBnextIntegration" />
 			</feature>
 		</config-file>
 		<config-file parent="/*" target="AndroidManifest.xml" />
