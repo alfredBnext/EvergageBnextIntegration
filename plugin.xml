@@ -28,6 +28,10 @@
 		</config-file>
 		<config-file parent="/*" target="AndroidManifest.xml" />
 		<source-file src="src/android/EvergageBnextIntegration.java" target-dir="src/mx/bnext/EvergageBnextIntegration" />
+		<framework src="com.evergage.android:evergage-android-sdk:1.3.0" />
+		<config-file target="res/values/strings.xml" parent="/*">
+			<string name="evergage_scheme">evgwueba</string>
+		</config-file> 
 	</platform>
 	
 	<platform name="ios">
