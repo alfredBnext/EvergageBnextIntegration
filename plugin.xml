@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		id="cordova-plugin-evergage-bnext-integration" 
-		version="0.0.2">
+		version="0.0.3">
 	<name>EvergageBnextIntegration</name>
 	
 	<description>EvergageBnextIntegration</description>
@@ -30,7 +30,7 @@
 		<source-file src="src/android/EvergageBnextIntegration.java" target-dir="src/mx/bnext/EvergageBnextIntegration" />
 		<framework src="com.evergage.android:evergage-android-sdk:1.3.0" />
 		<config-file target="res/values/strings.xml" parent="/*">
-			<string name="evergage_scheme">evgwueba</string>
+			<string name="evergage_scheme">$EVERGAGE_SCHEME</string>
 		</config-file> 
 	</platform>
 	
