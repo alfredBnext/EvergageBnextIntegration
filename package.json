@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://dev.azure.com/bnext-mx/Bnext%20eShop/_git/Evergage%20Cordova"
+    "url": "git+https://github.com/AlfredRds/EvergageBnextIntegration.git"
   },
   "keywords": [
     "ecosystem:cordova",
@@ -32,5 +32,5 @@
   "bugs": {
     "url": "mailto:jrodriguez@bnext.mx"
   },
-  "homepage": "https://dev.azure.com/bnext-mx/Bnext%20eShop/_git/Evergage%20Cordova"
+  "homepage": "https://github.com/AlfredRds/EvergageBnextIntegration"
 }
