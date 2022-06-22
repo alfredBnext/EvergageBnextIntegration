@@ -23,7 +23,7 @@
 	<platform name="android">
 		<config-file parent="/*" target="res/xml/config.xml">
 			<feature name="EvergageBnextIntegration">
-				<param name="android-package" value="mx.bnext.EvergageBnextIntegration" />
+				<param name="android-package" value="EvergageBnextIntegration" />
 			</feature>
 		</config-file>
 		<config-file parent="/*" target="AndroidManifest.xml" />
