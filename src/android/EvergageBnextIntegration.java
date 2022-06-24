@@ -10,23 +10,55 @@ import org.json.JSONException;
 
 import com.evergage.android.ClientConfiguration;
 import com.evergage.android.Evergage;
+import com.evergage.android.LogLevel;
 import com.evergage.android.Screen;
 import com.evergage.android.promote.Category;
 import com.evergage.android.promote.LineItem;
 import com.evergage.android.promote.Product;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class EvergageBnextIntegration extends CordovaPlugin {
     Evergage evergage;
+    public List<String> actionsContemplated = new ArrayList<>(Arrays.asList(
+            "start",
+            "setLogLevel",
+            "viewProduct",
+            "viewCategory",
+            "addToCart",
+            "trackAction"
+    ));
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        Evergage.initialize(this.cordova.getActivity().getApplication());
-        evergage = Evergage.getInstance();
+        cordova.getActivity().runOnUiThread(() -> {
+            Evergage.initialize(cordova.getActivity().getApplication());
+        });
+
     }
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+        boolean haveAction = actionsContemplated.contains(action);
+
+        if(haveAction){
+            cordova.getActivity().runOnUiThread(() -> {
+                try {
+                    executeActions(action, args, callbackContext);
+                } catch (JSONException e) {
+                    callbackContext.error(e.toString());
+                }
+            });
+        }
+
+        return haveAction;
+    }
+
+    public void executeActions(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+        initExecute();
         String id;
         String name;
         double price;
@@ -36,32 +68,38 @@ public class EvergageBnextIntegration extends CordovaPlugin {
                 String dataset = args.getString(1);
                 boolean usePushNotification = args.getBoolean(2);
                 this.start(account, dataset, usePushNotification, callbackContext);
-                return true;
+                break;
+            case "setLogLevel":
+                int eventLog = args.getInt(0);
+                this.setLogLevel(eventLog, callbackContext);
+                break;
             case "viewProduct":
                 id = args.getString(0);
                 name = args.getString(1);
                 price = args.getDouble(2);
                 this.viewProduct(id, name, price, callbackContext);
-                return true;
+                break;
             case "viewCategory":
                 id = args.getString(0);
                 name = args.getString(1);
                 this.viewCategory(id, name, callbackContext);
-                return true;
+                break;
             case "addToCart":
                 id = args.getString(0);
                 name = args.getString(1);
                 price = args.getDouble(2);
                 int quantity = args.getInt(3);
                 this.addToCart(id, name, price, quantity, callbackContext);
-                return true;
+                break;
             case "trackAction":
                 String event = args.getString(0);
                 this.trackAction(event, callbackContext);
-                return true;
+                break;
         }
+    }
 
-        return false;
+    private void initExecute(){
+        evergage = Evergage.getInstance();
     }
 
     private void start(String account, String dateset, boolean usePushNotification, CallbackContext callbackContext){
@@ -71,6 +109,15 @@ public class EvergageBnextIntegration extends CordovaPlugin {
                     .dataset(dateset)
                     .usePushNotifications(usePushNotification)
                     .build());
+            callbackContext.success("Ok");
+        }catch (Exception e){
+            callbackContext.error(e.toString());
+        }
+    }
+
+    private void setLogLevel(@LogLevel final int logLevel, CallbackContext callbackContext){
+        try {
+            Evergage.setLogLevel(logLevel);
             callbackContext.success("Ok");
         }catch (Exception e){
             callbackContext.error(e.toString());
@@ -129,4 +176,5 @@ public class EvergageBnextIntegration extends CordovaPlugin {
             callbackContext.error(e.toString());
         }
     }
+
 }
