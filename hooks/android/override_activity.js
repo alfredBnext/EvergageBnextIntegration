@@ -3,10 +3,11 @@
 var fs = require('fs'),
     path = require('path'),
     xml2js = require('xml2js'),
+    q = require('q'),
     parser = new xml2js.Parser();
 
 module.exports = function (context) {
-    var deferral = context.requireCordovaModule('q').defer();
+    var deferral = q.defer();
 
 
     var PACKAGE_NAME_PLACEHOLDER = "<%PACKAGE_NAME%>";
@@ -14,7 +15,7 @@ module.exports = function (context) {
     var packageName, activityTargetPath;
 
     var projectRoot = context.opts.projectRoot;
-    var platformRoot = path.join(projectRoot, 'platforms/android');
+    var platformRoot = path.join(projectRoot, 'platforms/android/app/src/main/java');
 
     var activitySourcePath = path.join(context.opts.plugin.pluginInfo.dir, 'src/android/MainActivity.java');
     //console.log("activitySourcePath: "+activitySourcePath);
@@ -30,7 +31,7 @@ module.exports = function (context) {
                 deferral.reject("Failed to parse config.xml: " + err);
             }
             packageName = result.widget.$.id;
-            activityTargetPath = path.join(platformRoot, 'src', packageName.replace(/\./g,'/'), 'MainActivity.java');
+            activityTargetPath = path.join(platformRoot, '', packageName.replace(/\./g,'/'), 'MainActivity.java');
             //console.log("activityTargetPath: "+activityTargetPath);
 
             fs.readFile(activitySourcePath, function(err, activitySrc) {

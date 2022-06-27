@@ -35,10 +35,6 @@ public class EvergageBnextIntegration extends CordovaPlugin {
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        cordova.getActivity().runOnUiThread(() -> {
-            Evergage.initialize(cordova.getActivity().getApplication());
-        });
-
     }
 
     @Override
