@@ -20,15 +20,12 @@
 package <%PACKAGE_NAME%>;
 
 import android.os.Bundle;
-import android.webkit.WebView;
+import org.apache.cordova.*;
 
 import com.evergage.android.Evergage;
 
-import org.apache.cordova.*;
-
 public class MainActivity extends CordovaActivity
 {
-    private PopupBridge mPopupBridge;
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
