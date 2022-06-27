@@ -19,6 +19,7 @@ import com.evergage.android.promote.Product;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class EvergageBnextIntegration extends CordovaPlugin {
     Evergage evergage;
@@ -132,6 +133,8 @@ public class EvergageBnextIntegration extends CordovaPlugin {
             product.price = price;
             if(screen != null)
                 screen.viewItem(product);
+            else
+                Objects.requireNonNull(evergage.getGlobalContext()).viewItem(product);
             callbackContext.success("Ok");
         }catch (Exception e){
             callbackContext.error(e.toString());
@@ -145,6 +148,8 @@ public class EvergageBnextIntegration extends CordovaPlugin {
             category.name = name;
             if(screen != null)
                 screen.viewCategory(category);
+            else
+                Objects.requireNonNull(evergage.getGlobalContext()).viewCategory(category);
             callbackContext.success("Ok");
         }catch (Exception e){
             callbackContext.error(e.toString());
@@ -160,6 +165,8 @@ public class EvergageBnextIntegration extends CordovaPlugin {
             LineItem lineItem = new LineItem(product, quantity);
             if(screen != null)
                 screen.addToCart(lineItem);
+            else
+                Objects.requireNonNull(evergage.getGlobalContext()).addToCart(lineItem);
             callbackContext.success("Ok");
         }catch (Exception e){
             callbackContext.error(e.toString());
@@ -171,6 +178,8 @@ public class EvergageBnextIntegration extends CordovaPlugin {
             Screen screen = evergage.getScreenForActivity(this.cordova.getActivity());
             if(screen != null)
                 screen.trackAction(event);
+            else
+                Objects.requireNonNull(evergage.getGlobalContext()).trackAction(event);
             callbackContext.success("Ok");
         }catch (Exception e){
             callbackContext.error(e.toString());
