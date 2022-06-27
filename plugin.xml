@@ -4,7 +4,6 @@
 		id="cordova-plugin-evergage-bnext-integration" 
 		version="0.0.3">
 	<name>EvergageBnextIntegration</name>
-	
 	<description>EvergageBnextIntegration</description>
     <license>MIT</license>
 
@@ -26,7 +25,7 @@
 				<param name="android-package" value="mx.bnext.EvergageBnextIntegration.EvergageBnextIntegration" />
 			</feature>
 		</config-file>
-		
+
 		<hook type="after_prepare" src="hooks/android/override_activity.js" />
 
 		<config-file parent="/*" target="AndroidManifest.xml" />

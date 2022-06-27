@@ -32,5 +32,8 @@
   "bugs": {
     "url": "mailto:jrodriguez@bnext.mx"
   },
-  "homepage": "https://github.com/AlfredRds/EvergageBnextIntegration"
+  "homepage": "https://github.com/AlfredRds/EvergageBnextIntegration",
+  "dependencies": {
+    "xml2js": "^0.4.17"
+  }
 }
