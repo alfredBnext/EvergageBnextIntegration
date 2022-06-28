@@ -1,5 +1,7 @@
 package mx.bnext.EvergageBnextIntegration;
 
+import android.util.Log;
+
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
@@ -23,6 +25,7 @@ import java.util.Objects;
 
 public class EvergageBnextIntegration extends CordovaPlugin {
     Evergage evergage;
+
     public List<String> actionsContemplated = new ArrayList<>(Arrays.asList(
             "start",
             "setLogLevel",
@@ -30,6 +33,14 @@ public class EvergageBnextIntegration extends CordovaPlugin {
             "viewCategory",
             "addToCart",
             "trackAction"
+    ));
+    public List<Integer> logLevelAccepted = new ArrayList<>(Arrays.asList(
+            LogLevel.OFF,
+            LogLevel.ERROR,
+            LogLevel.WARN,
+            LogLevel.INFO,
+            LogLevel.DEBUG,
+            LogLevel.ALL
     ));
 
     @Override
@@ -67,8 +78,12 @@ public class EvergageBnextIntegration extends CordovaPlugin {
                 this.start(account, dataset, usePushNotification, callbackContext);
                 break;
             case "setLogLevel":
-                int eventLog = args.getInt(0);
-                this.setLogLevel(eventLog, callbackContext);
+                String eventLogString = args.getString(0);
+                try {
+                    int x = Integer.parseInt(eventLogString);
+                    if(!logLevelAccepted.contains(x))
+                        this.setLogLevel(x, callbackContext);
+                } catch (NumberFormatException ignored){}
                 break;
             case "viewProduct":
                 id = args.getString(0);
