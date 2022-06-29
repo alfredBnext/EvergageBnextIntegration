@@ -6,11 +6,12 @@
 	<name>EvergageBnextIntegration</name>
 	<description>EvergageBnextIntegration</description>
     <license>MIT</license>
-
     <keywords>cordova,evergage</keywords>
 	<repo>https://github.com/AlfredRds/EvergageBnextIntegration</repo>
 	<issue>mailto:jrodriguez@bnext.mx</issue>
 
+	<preference name="EVERGAGE_SCHEME" />
+	
 	<engines>
         <engine name="cordova" version=">=3.2.0"/>
     </engines>
