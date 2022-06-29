@@ -43,6 +43,6 @@ module.exports = {
     },
 
     trackAction(event, success, error){
-        exec(success, error, 'EvergageBnextIntegration', 'viewCategory', [event])
+        exec(success, error, 'EvergageBnextIntegration', 'trackAction', [event])
     }
 };

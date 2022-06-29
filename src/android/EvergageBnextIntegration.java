@@ -81,7 +81,7 @@ public class EvergageBnextIntegration extends CordovaPlugin {
                 String eventLogString = args.getString(0);
                 try {
                     int x = Integer.parseInt(eventLogString);
-                    if(!logLevelAccepted.contains(x))
+                    if(logLevelAccepted.contains(x))
                         this.setLogLevel(x, callbackContext);
                 } catch (NumberFormatException ignored){
                     callbackContext.error("Level not exist");
