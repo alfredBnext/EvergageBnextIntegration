@@ -38,6 +38,10 @@ module.exports = {
         exec(success, error, 'EvergageBnextIntegration', 'viewCategory', [id, name])
     },
 
+    addToCart(id, name, price, quantity, success, error){
+        exec(success, error, 'EvergageBnextIntegration', 'addToCart', [id, name, price, quantity])
+    },
+
     trackAction(event, success, error){
         exec(success, error, 'EvergageBnextIntegration', 'trackAction', [event])
     }
