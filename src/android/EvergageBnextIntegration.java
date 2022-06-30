@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import com.evergage.android.ClientConfiguration;
+import com.evergage.android.Context;
 import com.evergage.android.Evergage;
 import com.evergage.android.LogLevel;
 import com.evergage.android.Screen;
@@ -28,6 +29,7 @@ public class EvergageBnextIntegration extends CordovaPlugin {
 
     public List<String> actionsContemplated = new ArrayList<>(Arrays.asList(
             "start",
+            "setUserId",
             "setLogLevel",
             "viewProduct",
             "viewCategory",
@@ -70,6 +72,11 @@ public class EvergageBnextIntegration extends CordovaPlugin {
         String id;
         String name;
         double price;
+        
+        if (evergage.getGlobalContext() == null){
+            callbackContext.error("Error en bundle id o url schema. Evergage is disabled");
+        }
+
         switch (action){
             case "start":
                 String account = args.getString(0);
@@ -86,6 +93,10 @@ public class EvergageBnextIntegration extends CordovaPlugin {
                 } catch (NumberFormatException ignored){
                     callbackContext.error("Level not exist");
                 }
+                break;
+            case "setUserId":
+                String userId = args.getString(0);
+                this.setUserId(userId, callbackContext);
                 break;
             case "viewProduct":
                 id = args.getString(0);
@@ -138,16 +149,26 @@ public class EvergageBnextIntegration extends CordovaPlugin {
         }
     }
 
+    private void setUserId(String userId, CallbackContext callbackContext){
+        try{
+            evergage.setUserId(userId);
+            callbackContext.success("Ok");
+        } catch (Exception e){
+            callbackContext.error(e.toString());
+        }
+    }
+
     private void viewProduct(String id, String name, Double price, CallbackContext callbackContext){
         try {
             Screen screen = evergage.getScreenForActivity(this.cordova.getActivity());
+            Context contextEvergage = evergage.getGlobalContext();
             Product product = new Product(id);
             product.name = name;
             product.price = price;
             if(screen != null)
                 screen.viewItem(product);
             else
-                Objects.requireNonNull(evergage.getGlobalContext()).viewItem(product);
+                Objects.requireNonNull(contextEvergage).viewItem(product);
             callbackContext.success("Ok");
         }catch (Exception e){
             callbackContext.error(e.toString());
