@@ -44,5 +44,9 @@ module.exports = {
 
     trackAction(event, success, error){
         exec(success, error, 'EvergageBnextIntegration', 'trackAction', [event])
+    },
+
+    purchase(orderId, lines, totalevent, success, error){
+        exec(success, error, 'EvergageBnextIntegration', 'purchase', [orderId, lines, totalevent])
     }
 };

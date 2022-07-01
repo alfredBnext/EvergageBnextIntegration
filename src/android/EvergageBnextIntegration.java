@@ -17,12 +17,17 @@ import com.evergage.android.LogLevel;
 import com.evergage.android.Screen;
 import com.evergage.android.promote.Category;
 import com.evergage.android.promote.LineItem;
+import com.evergage.android.promote.Order;
 import com.evergage.android.promote.Product;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import mx.bnext.EvergageBnextIntegration.Models.ListSaleLine;
+import mx.bnext.EvergageBnextIntegration.Models.SaleLine;
 
 public class EvergageBnextIntegration extends CordovaPlugin {
     Evergage evergage;
@@ -34,7 +39,8 @@ public class EvergageBnextIntegration extends CordovaPlugin {
             "viewProduct",
             "viewCategory",
             "addToCart",
-            "trackAction"
+            "trackAction",
+            "purchase"
     ));
     public List<Integer> logLevelAccepted = new ArrayList<>(Arrays.asList(
             LogLevel.OFF,
@@ -119,6 +125,12 @@ public class EvergageBnextIntegration extends CordovaPlugin {
             case "trackAction":
                 String event = args.getString(0);
                 this.trackAction(event, callbackContext);
+                break;
+            case "purchase":
+                String orderId = args.getString(0);
+                String lines = args.getString(1);
+                double total = args.getDouble(2);
+                this.purchase(orderId, lines, total, callbackContext);
                 break;
         }
     }
@@ -220,4 +232,29 @@ public class EvergageBnextIntegration extends CordovaPlugin {
         }
     }
 
+    private void purchase(String orderId, String lines, double total, CallbackContext callbackContext){
+        try {
+            Gson gson = new Gson();
+            ListSaleLine listSaleLine = gson.fromJson(lines, ListSaleLine.class);
+            List<SaleLine> saleLines = listSaleLine.getList();
+            List<LineItem> linesEvent = new ArrayList<>();
+            Screen screen = evergage.getScreenForActivity(this.cordova.getActivity());
+
+            for (SaleLine saleline: saleLines) {
+                Product product = new Product(saleline.getId());
+                product.name = saleline.getName();
+                product.price = saleline.getPrice();
+                linesEvent.add(new LineItem(product, saleline.getQuantity()));
+            }
+
+            if(screen != null)
+                screen.purchase(new Order(orderId, linesEvent, total));
+            else
+                Objects.requireNonNull(evergage.getGlobalContext()).purchase(new Order(orderId, linesEvent, total));
+            
+            callbackContext.success("Ok");
+        }catch (Exception e){
+            callbackContext.error(e.toString());
+        }
+    }
 }
