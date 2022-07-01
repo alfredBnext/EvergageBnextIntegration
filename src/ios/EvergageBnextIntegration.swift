@@ -23,11 +23,15 @@ import Evergage
         var pluginResult: CDVPluginResult
         let evergage = Evergage.sharedInstance()
         
-        evergage.start { (clientConfigurationBuilder) in
-            clientConfigurationBuilder.account = account
-            clientConfigurationBuilder.dataset = dataset
-            clientConfigurationBuilder.usePushNotifications = usePushNotification
+        if(account != nil && dataset != nil && usePushNotification != nil) {
+            evergage.start { (clientConfigurationBuilder) in
+                clientConfigurationBuilder.account = account!
+                clientConfigurationBuilder.dataset = dataset!
+                clientConfigurationBuilder.usePushNotifications = usePushNotification!
+            }
         }
+        
+        
         
         pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
         self.commandDelegate!.send(pluginResult, callbackId: command.callbackId);
@@ -40,12 +44,14 @@ import Evergage
         var pluginResult: CDVPluginResult
         let evergage = Evergage.sharedInstance()
         
-        let logLevel = Int(errorLevel)
-        
-        if let loglevenEvg = EVGLogLevel (rawValue: logLevel) {
-            evergage.logLevel = loglevenEvg
+        if(errorLevel != nil){
+            let logLevel = Int(errorLevel!)
+            
+            if let loglevenEvg = EVGLogLevel (rawValue: logLevel!) {
+                evergage.logLevel = loglevenEvg
+            }
         }
-                
+        
         pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
         self.commandDelegate!.send(pluginResult, callbackId: command.callbackId);
     }
@@ -59,10 +65,12 @@ import Evergage
         var pluginResult: CDVPluginResult
         let evergage = Evergage.sharedInstance()
         
-        let product = EVGProduct.init(id: String(product.id!))
-        product.name = name
-        product.price = price
-        evergage.globalContext?.viewItem(product)
+        if(id != nil && name != nil && price != nil){
+            let product = EVGProduct.init(id: String(id!))
+            product.name = name!
+            product.price = NSNumber(value: price!)
+            evergage.globalContext?.viewItem(product)
+        }
         
         pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
         self.commandDelegate!.send(pluginResult, callbackId: command.callbackId);
@@ -76,9 +84,11 @@ import Evergage
         var pluginResult: CDVPluginResult
         let evergage = Evergage.sharedInstance()
         
-        let category = EVGCategory.init(id: id, name: name)
-        
-        evergage.globalContext?.viewCategory(category)
+        if (id != nil) {
+            let category = EVGCategory.init(id: id!)
+            category.name = name
+            evergage.globalContext?.viewCategory(category)
+        }
         
         pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
         self.commandDelegate!.send(pluginResult, callbackId: command.callbackId);
@@ -91,7 +101,9 @@ import Evergage
         var pluginResult: CDVPluginResult
         let evergage = Evergage.sharedInstance()
         
-        evergage.trackAction(event)
+        if (event != nil){
+            evergage.globalContext?.trackAction(event!)
+        }
         
         pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
         self.commandDelegate!.send(pluginResult, callbackId: command.callbackId);
@@ -107,10 +119,12 @@ import Evergage
         var pluginResult: CDVPluginResult
         let evergage = Evergage.sharedInstance()
         
-        let product = EVGProduct.init(id: String(product.id!))
-        product.name = name
-        product.price = price
-        evergage.globalContext?.addToCart(EVGLineItem.init(item: EVGItemproduct, quantity: quantity))
+        if (id != nil && name != nil && price != nil && quantity != nil) {
+            let product = EVGProduct.init(id: id!)
+            product.name = name
+            product.price = NSNumber(value: price!)
+            evergage.globalContext?.add(toCart: (EVGLineItem.init(item: product, quantity: NSNumber(value: quantity!))))
+        }
         
         pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
         self.commandDelegate!.send(pluginResult, callbackId: command.callbackId);
