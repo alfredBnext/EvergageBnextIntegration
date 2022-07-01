@@ -3,8 +3,7 @@ import Evergage
 @objc(EvergageBnextIntegration) class EvergageBnextIntegration: CDVPlugin {
     @objc(setUserId:)
     func setUserId(command: CDVInvokedUrlCommand) {
-        let arguments = command.argument(at: 0) as? Dictionary<String, Any>
-        let userId = arguments?["userId"] as? String
+        let userId = command.argument(at: 0) as? String
         var pluginResult: CDVPluginResult
         let evergage = Evergage.sharedInstance()
         
@@ -16,10 +15,9 @@ import Evergage
     
     @objc(start:)
     func start(command: CDVInvokedUrlCommand) {
-        let arguments = command.argument(at: 0) as? Dictionary<String, Any>
-        let account = arguments?["account"] as? String
-        let dataset = arguments?["dataset"] as? String
-        let usePushNotification = arguments?["usePushNotification"] as? Bool
+        let account = command.argument(at: 0) as? String
+        let dataset = command.argument(at: 1) as? String
+        let usePushNotification = command.argument(at: 2) as? Bool
         var pluginResult: CDVPluginResult
         let evergage = Evergage.sharedInstance()
         
@@ -39,15 +37,12 @@ import Evergage
     
     @objc(setLogLevel:)
     func setLogLevel(command: CDVInvokedUrlCommand) {
-        let arguments = command.argument(at: 0) as? Dictionary<String, Any>
-        let errorLevel = arguments?["errorLevel"] as? String
+        let errorLevel = command.argument(at: 0) as? Int
         var pluginResult: CDVPluginResult
         let evergage = Evergage.sharedInstance()
         
         if(errorLevel != nil){
-            let logLevel = Int(errorLevel!)
-            
-            if let loglevenEvg = EVGLogLevel (rawValue: logLevel!) {
+            if let loglevenEvg = EVGLogLevel (rawValue: errorLevel!) {
                 evergage.logLevel = loglevenEvg
             }
         }
@@ -58,10 +53,9 @@ import Evergage
 
     @objc(viewProduct:)
     func viewProduct(command: CDVInvokedUrlCommand) {
-        let arguments = command.argument(at: 0) as? Dictionary<String, Any>
-        let id = arguments?["id"] as? String
-        let name = arguments?["name"] as? String
-        let price = arguments?["price"] as? Double
+        let id = command.argument(at: 0) as? String
+        let name = command.argument(at: 1) as? String
+        let price = command.argument(at: 2) as? Double
         var pluginResult: CDVPluginResult
         let evergage = Evergage.sharedInstance()
         
@@ -78,9 +72,8 @@ import Evergage
 
     @objc(viewCategory:)
     func viewCategory(command: CDVInvokedUrlCommand) {
-        let arguments = command.argument(at: 0) as? Dictionary<String, Any>
-        let id = arguments?["id"] as? String
-        let name = arguments?["name"] as? String
+        let id = command.argument(at: 0) as? String
+        let name = command.argument(at: 1) as? String
         var pluginResult: CDVPluginResult
         let evergage = Evergage.sharedInstance()
         
@@ -96,8 +89,7 @@ import Evergage
 
     @objc(trackAction:)
     func trackAction(command: CDVInvokedUrlCommand) {
-        let arguments = command.argument(at: 0) as? Dictionary<String, Any>
-        let event = arguments?["event"] as? String
+        let event = command.argument(at: 0) as? String
         var pluginResult: CDVPluginResult
         let evergage = Evergage.sharedInstance()
         
@@ -111,11 +103,10 @@ import Evergage
     
     @objc(addToCart:)
     func addToCart(command: CDVInvokedUrlCommand) {
-        let arguments = command.argument(at: 0) as? Dictionary<String, Any>
-        let id = arguments?["id"] as? String
-        let name = arguments?["name"] as? String
-        let price = arguments?["price"] as? Double
-        let quantity = arguments?["quantity"] as? Int
+        let id = command.argument(at: 0) as? String
+        let name = command.argument(at: 1) as? String
+        let price = command.argument(at: 2) as? Double
+        let quantity = command.argument(at: 3) as? Int
         var pluginResult: CDVPluginResult
         let evergage = Evergage.sharedInstance()
         
