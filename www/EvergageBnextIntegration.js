@@ -22,11 +22,11 @@ module.exports = {
         exec(success, error, 'EvergageBnextIntegration', 'setUserId', [userId])
     },
 
-    start: function(account, dataset, usePushNotification, success, error){
+    start(account, dataset, usePushNotification, success, error){
         exec(success, error,'EvergageBnextIntegration', 'start', [account, dataset, usePushNotification]);
     },
 
-    setLogLevel: function(errorLevel, success, error){
+    setLogLevel(errorLevel, success, error){
         exec(success, error, 'EvergageBnextIntegration', 'setLogLevel', [errorLevel])
     },
 
