@@ -50,6 +50,8 @@
 			</feature>
 		</config-file>
 		<source-file src="src/ios/EvergageBnextIntegration.swift" />
+		<source-file src="src/ios/ListSaleLine.swift" />
+		<source-file src="src/ios/SaleLine.swift" />
 		<podspec>
 			<config>
 				<source url="https://cdn.cocoapods.org/"/>

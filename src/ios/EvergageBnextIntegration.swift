@@ -3,9 +3,9 @@ import Evergage
 @objc(EvergageBnextIntegration) class EvergageBnextIntegration: CDVPlugin {
     @objc(setUserId:)
     func setUserId(command: CDVInvokedUrlCommand) {
-        let userId = command.argument(at: 0) as? String
         var pluginResult: CDVPluginResult
         let evergage = Evergage.sharedInstance()
+        let userId = command.argument(at: 0) as? String
         
         evergage.userId = userId
         
@@ -15,11 +15,11 @@ import Evergage
     
     @objc(start:)
     func start(command: CDVInvokedUrlCommand) {
+        var pluginResult: CDVPluginResult
+        let evergage = Evergage.sharedInstance()
         let account = command.argument(at: 0) as? String
         let dataset = command.argument(at: 1) as? String
         let usePushNotification = command.argument(at: 2) as? Bool
-        var pluginResult: CDVPluginResult
-        let evergage = Evergage.sharedInstance()
         
         if(account != nil && dataset != nil && usePushNotification != nil) {
             evergage.start { (clientConfigurationBuilder) in
@@ -37,9 +37,9 @@ import Evergage
     
     @objc(setLogLevel:)
     func setLogLevel(command: CDVInvokedUrlCommand) {
-        let errorLevel = command.argument(at: 0) as? Int
         var pluginResult: CDVPluginResult
         let evergage = Evergage.sharedInstance()
+        let errorLevel = command.argument(at: 0) as? Int
         
         if(errorLevel != nil){
             if let loglevenEvg = EVGLogLevel (rawValue: errorLevel!) {
@@ -53,11 +53,11 @@ import Evergage
 
     @objc(viewProduct:)
     func viewProduct(command: CDVInvokedUrlCommand) {
+        var pluginResult: CDVPluginResult
+        let evergage = Evergage.sharedInstance()
         let id = command.argument(at: 0) as? String
         let name = command.argument(at: 1) as? String
         let price = command.argument(at: 2) as? Double
-        var pluginResult: CDVPluginResult
-        let evergage = Evergage.sharedInstance()
         
         if(id != nil && name != nil && price != nil){
             let product = EVGProduct.init(id: String(id!))
@@ -72,10 +72,10 @@ import Evergage
 
     @objc(viewCategory:)
     func viewCategory(command: CDVInvokedUrlCommand) {
-        let id = command.argument(at: 0) as? String
-        let name = command.argument(at: 1) as? String
         var pluginResult: CDVPluginResult
         let evergage = Evergage.sharedInstance()
+        let id = command.argument(at: 0) as? String
+        let name = command.argument(at: 1) as? String
         
         if (id != nil) {
             let category = EVGCategory.init(id: id!)
@@ -89,9 +89,9 @@ import Evergage
 
     @objc(trackAction:)
     func trackAction(command: CDVInvokedUrlCommand) {
-        let event = command.argument(at: 0) as? String
         var pluginResult: CDVPluginResult
         let evergage = Evergage.sharedInstance()
+        let event = command.argument(at: 0) as? String
         
         if (event != nil){
             evergage.globalContext?.trackAction(event!)
@@ -103,12 +103,12 @@ import Evergage
     
     @objc(addToCart:)
     func addToCart(command: CDVInvokedUrlCommand) {
+        var pluginResult: CDVPluginResult
+        let evergage = Evergage.sharedInstance()
         let id = command.argument(at: 0) as? String
         let name = command.argument(at: 1) as? String
         let price = command.argument(at: 2) as? Double
         let quantity = command.argument(at: 3) as? Int
-        var pluginResult: CDVPluginResult
-        let evergage = Evergage.sharedInstance()
         
         if (id != nil && name != nil && price != nil && quantity != nil) {
             let product = EVGProduct.init(id: id!)
@@ -116,6 +116,36 @@ import Evergage
             product.price = NSNumber(value: price!)
             evergage.globalContext?.add(toCart: (EVGLineItem.init(item: product, quantity: NSNumber(value: quantity!))))
         }
+        
+        pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
+        self.commandDelegate!.send(pluginResult, callbackId: command.callbackId);
+    }
+    
+    @objc(purchase:)
+    func purchase(command: CDVInvokedUrlCommand){
+        var pluginResult: CDVPluginResult
+        let evergage = Evergage.sharedInstance()
+        let orderId = command.argument(at: 0) as? String
+        let lines = command.argument(at: 1) as? String
+        let total = command.argument(at: 2) as? Double
+        
+        if(orderId != nil && lines != nil && total != nil){
+            let linesDecodes = try! JSONDecoder().decode(ListSaleLine.self, from: lines!.data(using: String.Encoding.utf8)!)
+            
+            let saleLines: [SaleLine] = linesDecodes.list;
+            var linesEvent: [EVGLineItem] = []
+            
+            for saleLine in saleLines {
+                let product = EVGProduct.init(id: saleLine.id)
+                product.name = saleLine.name
+                product.price = NSNumber(value: saleLine.price)
+                linesEvent.append(EVGLineItem.init(item: product, quantity: NSNumber(value: saleLine.quantity)))
+            }
+
+            let order = EVGOrder.init(id: orderId, lineItems: linesEvent, totalValue: NSNumber(value: total!))
+            evergage.globalContext?.purchase(order)
+        }
+        
         
         pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
         self.commandDelegate!.send(pluginResult, callbackId: command.callbackId);
