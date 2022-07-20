@@ -16,11 +16,14 @@ import com.evergage.android.Evergage;
 import com.evergage.android.LogLevel;
 import com.evergage.android.Screen;
 import com.evergage.android.promote.Category;
+import com.evergage.android.promote.Item;
 import com.evergage.android.promote.LineItem;
 import com.evergage.android.promote.Order;
 import com.evergage.android.promote.Product;
 import com.google.gson.Gson;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -104,13 +107,15 @@ public class EvergageBnextIntegration extends CordovaPlugin {
                 break;
             case "setUserId":
                 String userId = args.getString(0);
-                this.setUserId(userId, callbackContext);
+                String email = args.getString(1);
+                String firstName = args.getString(2);
+                String lastName = args.getString(3);
+                this.setUserId(userId, email, firstName, lastName, callbackContext);
                 break;
             case "viewProduct":
                 id = args.getString(0);
-                name = args.getString(1);
-                price = args.getDouble(2);
-                this.viewProduct(id, name, price, callbackContext);
+                name = args.getString(1);;
+                this.viewProduct(id, name, callbackContext);
                 break;
             case "viewCategory":
                 id = args.getString(0);
@@ -163,22 +168,27 @@ public class EvergageBnextIntegration extends CordovaPlugin {
         }
     }
 
-    private void setUserId(String userId, CallbackContext callbackContext){
+    private void setUserId(String userId, String email, String firstName, String lastName, CallbackContext callbackContext){
         try{
             evergage.setUserId(userId);
+            evergage.setUserAttribute("emailAddress", email);
+            evergage.setUserAttribute("emailSHA256", sha256String(email));
+            evergage.setUserAttribute("firstName", firstName);
+            evergage.setUserAttribute("lastName", lastName);
+            //evergage.setAccountAttribute();
+
             callbackContext.success("Ok");
         } catch (Exception e){
             callbackContext.error(e.toString());
         }
     }
 
-    private void viewProduct(String id, String name, Double price, CallbackContext callbackContext){
+    private void viewProduct(String id, String name, CallbackContext callbackContext){
         try {
             Screen screen = evergage.getScreenForActivity(this.cordova.getActivity());
             Context contextEvergage = evergage.getGlobalContext();
             Product product = new Product(id);
             product.name = name;
-            product.price = price;
             if(screen != null)
                 screen.viewItem(product);
             else
@@ -258,5 +268,32 @@ public class EvergageBnextIntegration extends CordovaPlugin {
         }catch (Exception e){
             callbackContext.error(e.toString());
         }
+    }
+
+    public String sha256String(String source) {
+        byte[] hash = null;
+        String hashCode = null;// w  ww  .  j  a va 2 s.c  o m
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            hash = digest.digest(source.getBytes());
+        } catch (NoSuchAlgorithmException e) {
+            Log.d("Evergage", "Can't calculate SHA-256");
+        }
+
+        if (hash != null) {
+            StringBuilder hashBuilder = new StringBuilder();
+            for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(hash[i]);
+                if (hex.length() == 1) {
+                    hashBuilder.append("0");
+                    hashBuilder.append(hex.charAt(hex.length() - 1));
+                } else {
+                    hashBuilder.append(hex.substring(hex.length() - 2));
+                }
+            }
+            hashCode = hashBuilder.toString();
+        }
+
+        return hashCode;
     }
 }

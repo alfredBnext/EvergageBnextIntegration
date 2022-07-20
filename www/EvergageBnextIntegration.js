@@ -18,8 +18,8 @@ module.exports = {
     /** Enables all logging. */
     ALL: 2147483647,
 
-    setUserId(userId, success, error){
-        exec(success, error, 'EvergageBnextIntegration', 'setUserId', [userId])
+    setUserId(userId, email, firstName, lastName,success, error){
+        exec(success, error, 'EvergageBnextIntegration', 'setUserId', [userId, email, firstName, lastName])
     },
 
     start(account, dataset, usePushNotification, success, error){
