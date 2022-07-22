@@ -175,7 +175,6 @@ public class EvergageBnextIntegration extends CordovaPlugin {
             evergage.setUserAttribute("emailSHA256", sha256String(email));
             evergage.setUserAttribute("firstName", firstName);
             evergage.setUserAttribute("lastName", lastName);
-            //evergage.setAccountAttribute();
 
             callbackContext.success("Ok");
         } catch (Exception e){
