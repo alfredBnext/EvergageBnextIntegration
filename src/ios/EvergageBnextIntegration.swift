@@ -67,7 +67,7 @@ import CommonCrypto
         let id = command.argument(at: 0) as? String
         let name = command.argument(at: 1) as? String
         
-        if(id != nil && name != nil && price != nil){
+        if(id != nil && name != nil){
             let product = EVGProduct.init(id: String(id!))
             product.name = name!
             evergage.globalContext?.viewItem(product)
