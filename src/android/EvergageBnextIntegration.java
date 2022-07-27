@@ -43,7 +43,8 @@ public class EvergageBnextIntegration extends CordovaPlugin {
             "viewCategory",
             "addToCart",
             "trackAction",
-            "purchase"
+            "purchase",
+            "setZipCode"
     ));
     public List<Integer> logLevelAccepted = new ArrayList<>(Arrays.asList(
             LogLevel.OFF,
@@ -112,6 +113,10 @@ public class EvergageBnextIntegration extends CordovaPlugin {
                 String lastName = args.getString(3);
                 this.setUserId(userId, email, firstName, lastName, callbackContext);
                 break;
+            case "setZipCode":
+                String zipCode = args.getString(0);
+                this.setZipCode(zipCode, callbackContext);
+                break;
             case "viewProduct":
                 id = args.getString(0);
                 name = args.getString(1);;
@@ -175,6 +180,16 @@ public class EvergageBnextIntegration extends CordovaPlugin {
             evergage.setUserAttribute("emailSHA256", sha256String(email));
             evergage.setUserAttribute("firstName", firstName);
             evergage.setUserAttribute("lastName", lastName);
+
+            callbackContext.success("Ok");
+        } catch (Exception e){
+            callbackContext.error(e.toString());
+        }
+    }
+
+    private void setZipCode(String zipCode, CallbackContext callbackContext){
+        try{
+            evergage.setUserAttribute("zipCode", zipCode);
 
             callbackContext.success("Ok");
         } catch (Exception e){

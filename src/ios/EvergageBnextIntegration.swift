@@ -21,6 +21,17 @@ import CommonCrypto
         pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
         self.commandDelegate!.send(pluginResult, callbackId: command.callbackId);
     }
+
+    @objc(setZipCode:)
+    func setZipCode(command: CDVInvokedUrlCommand) {
+        var pluginResult: CDVPluginResult
+        let evergage = Evergage.sharedInstance()
+        let zipCode = command.argument(at: 0) as? String
+        evergage.setUserAttribute(zipCode, forName: "zipCode")
+        
+        pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
+        self.commandDelegate!.send(pluginResult, callbackId: command.callbackId);
+    }
     
     @objc(start:)
     func start(command: CDVInvokedUrlCommand) {
