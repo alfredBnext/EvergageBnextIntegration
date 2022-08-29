@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		id="cordova-plugin-evergage-bnext-integration" 
-		version="0.0.7">
+		version="0.0.8">
 	<name>EvergageBnextIntegration</name>
 	<description>EvergageBnextIntegration</description>
     <license>MIT</license>
@@ -10,7 +10,8 @@
 	<repo>https://github.com/alfredBnext/EvergageBnextIntegration</repo>
 	<issue>mailto:jrodriguez@bnext.mx</issue>
 
-	<preference name="EVERGAGE_SCHEME" />
+	<preference name="EVERGAGE_SCHEME_ANDROID" />
+	<preference name="EVERGAGE_SCHEME_IOS" />
 	
 	<engines>
         <engine name="cordova" version=">=3.2.0"/>
@@ -39,7 +40,7 @@
 		<framework src="com.google.code.gson:gson:2.9.0" />
 
 		<config-file target="res/values/strings.xml" parent="/*">
-			<string name="evergage_scheme">$EVERGAGE_SCHEME</string>
+			<string name="evergage_scheme">$EVERGAGE_SCHEME_ANDROID</string>
 		</config-file> 
 	</platform>
 	
