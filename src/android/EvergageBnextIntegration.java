@@ -83,7 +83,7 @@ public class EvergageBnextIntegration extends CordovaPlugin {
         String name;
         double price;
         
-        if (evergage.getGlobalContext() == null){
+        if (evergage.getGlobalContext() == null && !(action.equals("start") || action.equals("setLogLevel"))){
             callbackContext.error("Error en bundle id o url schema. Evergage is disabled");
             Log.i("Evergage", "Error en bundle id o url schema. Evergage is disabled");
             return;
