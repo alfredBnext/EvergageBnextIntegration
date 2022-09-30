@@ -1,8 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
 		id="cordova-plugin-evergage-bnext-integration" 
-		version="0.0.8">
+		version="0.0.9">
 	<name>EvergageBnextIntegration</name>
 	<description>EvergageBnextIntegration</description>
     <license>MIT</license>
@@ -41,7 +42,18 @@
 
 		<config-file target="res/values/strings.xml" parent="/*">
 			<string name="evergage_scheme">$EVERGAGE_SCHEME_ANDROID</string>
-		</config-file> 
+		</config-file>
+
+		<config-file target="AndroidManifest.xml" parent="/*" mode="merge">
+            <manifest xmlns:tools="http://schemas.android.com/tools"/>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity android:name="com.evergage.android.EvergageActivity"
+            android:exported="true"
+            tools:node="merge"
+            />
+        </config-file>
 	</platform>
 	
 	<platform name="ios">
