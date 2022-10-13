@@ -3,7 +3,7 @@
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:tools="http://schemas.android.com/tools"
 		id="cordova-plugin-evergage-bnext-integration" 
-		version="0.0.10">
+		version="0.0.11">
 	<name>EvergageBnextIntegration</name>
 	<description>EvergageBnextIntegration</description>
     <license>MIT</license>
@@ -28,7 +28,7 @@
 				<param name="android-package" value="mx.bnext.EvergageBnextIntegration.EvergageBnextIntegration" />
 			</feature>
 		</config-file>
-
+		<hook type="after_prepare" src="hooks/android/add_tools_namespace.js" />
 		<hook type="after_prepare" src="hooks/android/override_activity.js" />
 
 		<config-file parent="/*" target="AndroidManifest.xml" />
